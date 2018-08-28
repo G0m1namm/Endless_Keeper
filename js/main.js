@@ -77,6 +77,15 @@ var initGame={
 
         cursors = game.input.keyboard.createCursorKeys();
 
+        // Add the VirtualGamepad plugin to the game
+        this.gamepad = this.game.plugins.add(Phaser.Plugin.VirtualGamepad);
+            
+        // Add a joystick to the game (only one is allowed right now)
+        this.joystick = this.gamepad.addJoystick(102, 280,1, 'gamepad');
+        
+        // Add a button to the game (only one is allowed right now)
+        this.button = this.gamepad.addButton(560, 280,0.7, 'gamepad');
+
 
 
     },
@@ -87,7 +96,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             if (p.body.onFloor())
             {
@@ -95,12 +104,12 @@ var initGame={
             }
         }
 
-        if (cursors.left.isDown)
+        if (this.joystick.properties.left)
         {
             p.body.velocity.x = -90;
             p.scale.setTo(-1,1);
         }
-        else if (cursors.right.isDown)
+        else if (this.joystick.properties.right)
         {
             p.body.velocity.x = 90;
             p.scale.setTo(1,1);
