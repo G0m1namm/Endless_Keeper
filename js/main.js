@@ -7,6 +7,8 @@ var gameOptions={
 	gameHeight:360
 }
 var barConfig;
+var jump;
+var myHealthbar;
 
 var game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS, 'game');
 
@@ -98,13 +100,23 @@ var initGame={
     },
     
 	 update:function() {
-	
+        var bool = false;
 		game.physics.arcade.collide(p, layer);
 
         p.body.velocity.x = 0;
 
         if (this.button.isDown)
         {
+            jump+=0.1;
+            myHealthbar.setPercent(100-jump);
+
+            if(jump>=100){
+                p.kill();
+                game.state.restart();
+                jump=0;
+                return false
+            }
+
             if (p.body.onFloor())
             {
                 p.body.velocity.y = -160;
