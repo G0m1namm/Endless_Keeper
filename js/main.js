@@ -79,6 +79,35 @@ var initGame={
 
 
 
+    },
+    
+	 update:function() {
+	
+		game.physics.arcade.collide(p, layer);
+
+        p.body.velocity.x = 0;
+
+        if (cursors.up.isDown)
+        {
+            if (p.body.onFloor())
+            {
+                p.body.velocity.y = -160;
+            }
+        }
+
+        if (cursors.left.isDown)
+        {
+            p.body.velocity.x = -90;
+            p.scale.setTo(-1,1);
+        }
+        else if (cursors.right.isDown)
+        {
+            p.body.velocity.x = 90;
+            p.scale.setTo(1,1);
+
+        }
+
+		
 	},
 
 	hitCoin: function (sprite, tile){
