@@ -39,6 +39,55 @@ var boot = {
 
 	}
 }
+var initGame={
+	
+	create:function() {
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        game.stage.backgroundColor = '#787878';
+
+        map = game.add.tilemap('mapa');
+
+        map.addTilesetImage('EndlessKeeper-World1', 'tiles');
+
+        map.setCollision(12);
+        map.setCollision(15);
+        map.setCollision(9);
+        map.setTileIndexCallback(9, this.hitCoin, this);
+
+        btnAtras = game.add.button(32, 300, 'botonAtras');
+        btnAtras.fixedToCamera=true;
+        btnAtras.cameraOffset.setTo(30, 20);
+        
+        layer = map.createLayer('World1');
+
+        // layer.debug = true;
+
+        layer.resizeWorld();
+
+        p = game.add.sprite(32, 200, 'player');
+        game.physics.enable(p);
+
+        game.physics.arcade.gravity.y = 350;
+
+        p.body.bounce.y = 0;
+        p.body.linearDamping = 1;
+        p.body.collideWorldBounds = true;
+        game.camera.follow(p);
+
+        cursors = game.input.keyboard.createCursorKeys();
+
+
+
+	},
+
+	hitCoin: function (sprite, tile){
+        p.kill();
+        this.game.state.restart();
+        return false;
+    }
+}
+
 function onDeviceReady() {
    
 	game.state.start('Boot');
