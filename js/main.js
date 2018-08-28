@@ -76,6 +76,15 @@ var initGame={
         game.camera.follow(p);
 
         cursors = game.input.keyboard.createCursorKeys();
+        
+        // Add the VirtualGamepad plugin to the game
+        this.gamepad = this.game.plugins.add(Phaser.Plugin.VirtualGamepad);
+            
+        // Add a joystick to the game (only one is allowed right now)
+        this.joystick = this.gamepad.addJoystick(102, 280,1, 'gamepad');
+        
+        // Add a button to the game (only one is allowed right now)
+        this.button = this.gamepad.addButton(560, 280,0.7, 'gamepad');
 
 
 
