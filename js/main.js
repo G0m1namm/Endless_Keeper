@@ -6,6 +6,8 @@ var gameOptions={
 	gameWidth:640,
 	gameHeight:360
 }
+var barConfig;
+
 var game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS, 'game');
 
 var boot = {
@@ -73,6 +75,11 @@ var initGame={
         p.body.bounce.y = 0;
         p.body.linearDamping = 1;
         p.body.collideWorldBounds = true;
+
+        barConfig = {x:550, y:32, flipped:true};
+        myHealthbar = new HealthBar(game, barConfig);
+        myHealthbar.setFixedToCamera(true);
+        myHealthbar.setBarColor('#aaa');
         game.camera.follow(p);
 
         cursors = game.input.keyboard.createCursorKeys();
