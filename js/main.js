@@ -117,6 +117,17 @@ var initGame={
     }
 }
 
+function goToGame() {
+    game.state.start('InitGame');
+}
+
+
+
+	game.state.add('Boot',boot);
+	game.state.add('InitGame', initGame);
+
+
+
 function onDeviceReady() {
    
 	game.state.start('Boot');
