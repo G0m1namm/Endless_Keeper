@@ -82,7 +82,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite(3000, 200, 'playerRight');
+        p = game.add.sprite(32, 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -118,7 +118,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -138,12 +138,12 @@ var initGame={
 
         if (this.joystick.properties.left)
         {
-            p.body.velocity.x = -90;
+            p.body.velocity.x = -120;
             this.changeSide(true);
         }
         else if (this.joystick.properties.right)
         {
-            p.body.velocity.x = 90;
+            p.body.velocity.x = 120;
             this.changeSide(false);
         }
 

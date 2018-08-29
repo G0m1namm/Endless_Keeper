@@ -32,4 +32,5 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <preference name="Orientation" value="landscape" />
 </widget>
