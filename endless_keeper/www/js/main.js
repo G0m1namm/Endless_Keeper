@@ -26,8 +26,8 @@ var boot = {
 		game.load.tilemap('map', 'img/Endless_keeper.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'img/warTileset_32x32.png');
         // assets para el jugador
-        game.load.image('playerRight', 'img/Keeper32.png');
-        game.load.image('playerLeft', 'img/Keeper32_left.png');
+        game.load.image('playerRight', 'img/Keeper47.png');
+        game.load.image('playerLeft', 'img/Keeper47_left.png');
         // assets para los botones 
         game.load.image('botonAtras','img/Botones/Boton_atras.png', 171, 37);
         game.load.image('botonControles','img/Botones/Boton_controles.png', 171, 37);
@@ -60,10 +60,17 @@ var initGame={
 
         map.addTilesetImage('EndlessKeeper-World1', 'tiles');
 
-        map.setCollision(12);
-        map.setCollision(15);
+        map.setCollision(2);
         map.setCollision(9);
-        map.setTileIndexCallback(9, this.hitCoin, this);
+        map.setCollision(7);
+        map.setCollision(10);
+        map.setCollision(11);
+        map.setCollision(12);
+        map.setCollision(14);
+        map.setCollision(13);
+        map.setCollision(15);
+        map.setTileIndexCallback(7, this.killPlayer, this);
+        map.setTileIndexCallback(15, this.killPlayer, this);
 
         btnAtras = game.add.button(32, 300, 'botonAtras');
         btnAtras.fixedToCamera=true;
@@ -75,7 +82,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite(32, 200, 'playerRight');
+        p = game.add.sprite(3000, 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -111,7 +118,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (this.button.isDown)
+        if (cursors.up.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -125,7 +132,7 @@ var initGame={
 
             if (p.body.onFloor())
             {
-                p.body.velocity.y = -160;
+                p.body.velocity.y = -190;
             }
         }
 
@@ -143,7 +150,7 @@ var initGame={
 		
 	},
 
-	hitCoin: function (sprite, tile){
+	killPlayer: function (sprite, tile){
         p.kill();
         this.game.state.restart();
         return false;
