@@ -26,7 +26,8 @@ var boot = {
 		game.load.tilemap('map', 'img/Endless_keeper.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'img/warTileset_32x32.png');
         // assets para el jugador
-        game.load.image('player', 'img/Keeper32.png');
+        game.load.image('playerRight', 'img/Keeper32.png');
+        game.load.image('playerLeft', 'img/Keeper32_left.png');
         // assets para los botones 
         game.load.image('botonAtras','img/Botones/Boton_atras.png', 171, 37);
         game.load.image('botonControles','img/Botones/Boton_controles.png', 171, 37);
@@ -74,7 +75,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite(32, 200, 'player');
+        p = game.add.sprite(32, 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -131,13 +132,12 @@ var initGame={
         if (this.joystick.properties.left)
         {
             p.body.velocity.x = -90;
-            p.scale.setTo(-1,1);
+            this.changeSide(true);
         }
         else if (this.joystick.properties.right)
         {
             p.body.velocity.x = 90;
-            p.scale.setTo(1,1);
-
+            this.changeSide(false);
         }
 
 		
@@ -147,6 +147,15 @@ var initGame={
         p.kill();
         this.game.state.restart();
         return false;
+    },
+
+    changeSide: function (bool){
+        if(bool){
+            p.loadTexture('playerLeft', 0);
+        }
+        else{
+            p.loadTexture('playerRight', 0);
+        }
     }
 }
 
