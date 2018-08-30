@@ -66,7 +66,7 @@ var boot = {
 		
 	},
 	create: function(){
-		game.state.start('InitGame');
+		game.state.start('Carga');
 
 	}
 }
@@ -259,15 +259,77 @@ var initGame={
     }
 }
 
+var carga={
+    create: function(){
+        game.add.sprite(0,0,'bgPreload');
+        game.time.events.loop(2500,function(){
+            game.state.start('Inicio');
+        });
+        
+    }
+
+}
+
+var inicio={
+    create:function() {
+        
+		game.add.sprite(0, 0,'bgMenu');
+        btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
+        btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
+        btnInfo.scale.setTo(0.6);	
+        btnCreditos = game.add.button(235,320,'botonCreditos',goToCreditos,this);
+        btnCreditos.scale.setTo(0.7);	
+	},
+	 update:function() {
+	}
+}
+
+var creditos ={
+
+	create:function() {
+		game.add.sprite(0, 0,'bgCreditos');
+		btnAtras = game.add.button(0,0,'botonAtras',Inicio,this); 	
+	},
+	 update:function() {
+	}
+
+}
+
+var controles ={
+
+	create:function() {
+		game.add.sprite(0, 0,'bgControles');
+		var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);	
+	},
+	 update:function() {
+	}
+
+}
+
+function Inicio(){
+    game.state.start('Inicio');
+}
+function goToGame(){
+    game.state.start('InitGame');
+}
+
+function goToCreditos(){
+    game.state.start('Creditos');
+}
+function goToControles(){
+    game.state.start('Controles');
+}
+
 function goToGame() {
     game.state.start('InitGame');
 }
 
-
-
-	game.state.add('Boot',boot);
-	game.state.add('InitGame', initGame);
-
+game.state.add('Boot',boot);
+game.state.add('InitGame', initGame);
+game.state.add('Inicio', inicio);
+game.state.add('Carga', carga);
+game.state.add('Creditos', creditos);
+game.state.add('Controles', controles);
 
 
 function onDeviceReady() {
