@@ -7,17 +7,31 @@ window.onload = function(){
 var barConfig;
 var jump=0;
 var myHealthbar;
+var bestTime;
+var timeText;
+var bestTimeText;
+var numIntentos=3;
 
 var gameOptions={
 	gameWidth:640,
-	gameHeight:360
+    gameHeight:360,
+    localStorageName: "EndlessKeeper"
 }
 
 var game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS, 'game');
 
 var boot = {
 	init: function (){
-		 game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+         
+         if(localStorage.getItem(gameOptions.localStorageName) == null){
+
+			localStorage.setItem(gameOptions.localStorageName, bestTime );
+
+		}
+		else{
+		 bestTime =localStorage.getItem(gameOptions.localStorageName);
+		}
 
     },
 	preload: function(){
@@ -108,6 +122,14 @@ var initGame={
         // Add a button to the game (only one is allowed right now)
         this.button = this.gamepad.addButton(560, 280,0.7, 'gamepad');
 
+        this.startTime = new Date();
+        this.totalTime = 120;
+        this.timeElapsed = 0;
+
+        timeText = game.add.text(barConfig.x-200,20, "00:00", { font: "16px Arial", fill: "#fabfab", align: "center" });
+        timeText.fixedToCamera = true;  
+          
+        game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
 
 
     },
@@ -124,9 +146,7 @@ var initGame={
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
-                p.kill();
-                game.state.restart();
-                jump=0;
+                this.killPlayer;
                 return false
             }
 
@@ -151,9 +171,25 @@ var initGame={
 	},
 
 	killPlayer: function (sprite, tile){
-        p.kill();
-        this.game.state.restart();
-        return false;
+        numIntentos--;
+        if(numIntentos<=0){
+            var res = bestTime.split(":");
+            var local = localStorage.getItem(gameOptions.localStorageName);
+            var localSplit = local.split(":");
+            if(parseInt(res[0])<parseInt(localSplit[0])){
+                if(parseInt(res[1])<parseInt(localSplit[0])){
+                    localStorage.setItem(gameOptions.localStorageName, bestTime);
+                }
+            }
+            game.state.restart();
+        }
+        else{
+            p.body.x=32;
+            p.body.y=200;
+            jump=0;
+            return false;
+        }
+        
     },
 
     changeSide: function (bool){
@@ -163,6 +199,28 @@ var initGame={
         else{
             p.loadTexture('playerRight', 0);
         }
+    },
+    
+    updateTimer: function(){
+        var currentTime = new Date();
+        var timeDifference = this.startTime.getTime() - currentTime.getTime();
+            //Time elapsed in seconds
+        this.timeElapsed = Math.abs(timeDifference / 1000);
+    
+        //Time remaining in seconds
+        var timeRemaining = this.timeElapsed;
+    
+        //Convert seconds into minutes and seconds
+        var minutes = Math.floor(timeRemaining / 60);
+        var seconds = Math.floor(timeRemaining) - (60 * minutes);
+    
+        //Display minutes, add a 0 to the start if less than 10
+        var result = (minutes < 10) ? "0" + minutes : minutes;
+    
+        //Display seconds, add a 0 to the start if less than 10
+        result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+        bestTime = result;
+        timeText.setText(result);
     }
 }
 

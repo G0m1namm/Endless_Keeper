@@ -46,10 +46,6 @@
          "tilecount":40,
          "tileheight":32,
          "tilewidth":32
-        }, 
-        {
-         "firstgid":41,
-         "source":"C:\/Users\/Martelo\/Desktop\/tile\/newTiles.tsx"
         }],
  "tilewidth":32,
  "type":"map",
