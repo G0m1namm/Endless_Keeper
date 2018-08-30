@@ -24,6 +24,8 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="Orientation" value="landscape" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-apkInstaller" spec="https://github.com/cigalecigales/cordova-plugin-apkInstaller.git" />

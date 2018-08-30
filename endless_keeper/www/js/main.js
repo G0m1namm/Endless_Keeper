@@ -82,6 +82,8 @@ var initGame={
         map.addTilesetImage('EndlessKeeper-World1', 'tiles');
 
         map.setCollision(2);
+        map.setCollision(4);
+        map.setCollision(5);
         map.setCollision(9);
         map.setCollision(7);
         map.setCollision(10);
@@ -104,7 +106,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite((203*32), 200, 'playerRight');
+        p = game.add.sprite(32, 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -160,13 +162,13 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
-                this.killPlayer;
+                game.state.restart();
                 return false
             }
 
