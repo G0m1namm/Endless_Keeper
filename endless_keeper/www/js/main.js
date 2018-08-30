@@ -66,7 +66,7 @@ var boot = {
 		
 	},
 	create: function(){
-		game.state.start('InitGame');
+		game.state.start('Carga');
 
 	}
 }
@@ -82,6 +82,8 @@ var initGame={
         map.addTilesetImage('EndlessKeeper-World1', 'tiles');
 
         map.setCollision(2);
+        map.setCollision(4);
+        map.setCollision(5);
         map.setCollision(9);
         map.setCollision(7);
         map.setCollision(10);
@@ -104,7 +106,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite((203*32), 200, 'playerRight');
+        p = game.add.sprite(32, 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -113,19 +115,23 @@ var initGame={
         p.body.linearDamping = 1;
         p.body.collideWorldBounds = true;
 
-        head1 = game.add.sprite(190,20,'KeeperHead1');
+        head1 = game.add.sprite(190,10,'KeeperHead1');
         head1.fixedToCamera = true;
-        head2 = game.add.sprite(220,20,'KeeperHead2');
+        head2 = game.add.sprite(220,10,'KeeperHead2');
         head2.fixedToCamera = true;
-        head3 = game.add.sprite(250,20,'KeeperHead3');
+        head3 = game.add.sprite(250,10,'KeeperHead3');
         head3.fixedToCamera = true;
 
 
-        barConfig = {x:550, y:32, flipped:true};
+        barConfig = {x:550, y:22, flipped:true};
         myHealthbar = new HealthBar(game, barConfig);
         myHealthbar.setFixedToCamera(true);
         myHealthbar.setBarColor('#aaa');
         game.camera.follow(p);
+
+        btnAtras = game.add.button(0,10,'botonAtras',Inicio,this);
+        btnAtras.fixedToCamera=true;
+        btnAtras.scale.setTo(0.8); 	
 
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -142,7 +148,7 @@ var initGame={
         this.totalTime = 120;
         this.timeElapsed = 0;
 
-        timeText = game.add.text(barConfig.x-200,24, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
+        timeText = game.add.text(barConfig.x-200,14, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
         timeText.fixedToCamera = true;  
           
         game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
@@ -156,13 +162,13 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
-                this.killPlayer;
+                game.state.restart();
                 return false
             }
 
@@ -259,15 +265,81 @@ var initGame={
     }
 }
 
+var carga={
+    create: function(){
+        game.add.sprite(0,0,'bgPreload');
+        game.time.events.loop(2500,function(){
+            game.state.start('Inicio');
+        });
+        
+    }
+
+}
+
+var inicio={
+    create:function() {
+        
+		game.add.sprite(0, 0,'bgMenu');
+        btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
+        btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
+        btnInfo.scale.setTo(0.6);	
+        btnCreditos = game.add.button(235,320,'botonCreditos',goToCreditos,this);
+        btnCreditos.scale.setTo(0.7);	
+	},
+	 update:function() {
+	}
+}
+
+var creditos ={
+
+	create:function() {
+		game.add.sprite(0, 0,'bgCreditos');
+        btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
+        btnAtras.scale.setTo(0.8); 	
+         	
+	},
+	 update:function() {
+	}
+
+}
+
+var controles ={
+
+	create:function() {
+		game.add.sprite(0, 0,'bgControles');
+        var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
+        btnAtras.scale.setTo(0.8); 	
+        	
+	},
+	 update:function() {
+	}
+
+}
+
+function Inicio(){
+    game.state.start('Inicio');
+}
+function goToGame(){
+    game.state.start('InitGame');
+}
+
+function goToCreditos(){
+    game.state.start('Creditos');
+}
+function goToControles(){
+    game.state.start('Controles');
+}
+
 function goToGame() {
     game.state.start('InitGame');
 }
 
-
-
-	game.state.add('Boot',boot);
-	game.state.add('InitGame', initGame);
-
+game.state.add('Boot',boot);
+game.state.add('InitGame', initGame);
+game.state.add('Inicio', inicio);
+game.state.add('Carga', carga);
+game.state.add('Creditos', creditos);
+game.state.add('Controles', controles);
 
 
 function onDeviceReady() {
