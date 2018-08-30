@@ -113,19 +113,23 @@ var initGame={
         p.body.linearDamping = 1;
         p.body.collideWorldBounds = true;
 
-        head1 = game.add.sprite(190,20,'KeeperHead1');
+        head1 = game.add.sprite(190,10,'KeeperHead1');
         head1.fixedToCamera = true;
-        head2 = game.add.sprite(220,20,'KeeperHead2');
+        head2 = game.add.sprite(220,10,'KeeperHead2');
         head2.fixedToCamera = true;
-        head3 = game.add.sprite(250,20,'KeeperHead3');
+        head3 = game.add.sprite(250,10,'KeeperHead3');
         head3.fixedToCamera = true;
 
 
-        barConfig = {x:550, y:32, flipped:true};
+        barConfig = {x:550, y:22, flipped:true};
         myHealthbar = new HealthBar(game, barConfig);
         myHealthbar.setFixedToCamera(true);
         myHealthbar.setBarColor('#aaa');
         game.camera.follow(p);
+
+        btnAtras = game.add.button(0,10,'botonAtras',Inicio,this);
+        btnAtras.fixedToCamera=true;
+        btnAtras.scale.setTo(0.8); 	
 
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -142,7 +146,7 @@ var initGame={
         this.totalTime = 120;
         this.timeElapsed = 0;
 
-        timeText = game.add.text(barConfig.x-200,24, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
+        timeText = game.add.text(barConfig.x-200,14, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
         timeText.fixedToCamera = true;  
           
         game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
@@ -288,7 +292,9 @@ var creditos ={
 
 	create:function() {
 		game.add.sprite(0, 0,'bgCreditos');
-		btnAtras = game.add.button(0,0,'botonAtras',Inicio,this); 	
+        btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
+        btnAtras.scale.setTo(0.8); 	
+         	
 	},
 	 update:function() {
 	}
@@ -299,7 +305,9 @@ var controles ={
 
 	create:function() {
 		game.add.sprite(0, 0,'bgControles');
-		var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);	
+        var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
+        btnAtras.scale.setTo(0.8); 	
+        	
 	},
 	 update:function() {
 	}
