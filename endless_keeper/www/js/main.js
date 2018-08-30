@@ -7,14 +7,13 @@ window.onload = function(){
 var barConfig;
 var jump=0;
 var myHealthbar;
-var bestTime;
 var timeText;
 var bestTimeText;
 var numIntentos=3;
 var head1;
 var head2;
 var head3;
-var result;
+var bestTime;
 
 var gameOptions={
 	gameWidth:640,
@@ -34,7 +33,7 @@ var boot = {
 
 		}
 		else{
-		 result =localStorage.getItem(gameOptions.localStorageName);
+		 bestTime =localStorage.getItem(gameOptions.localStorageName);
 		}
 
     },
@@ -93,6 +92,7 @@ var initGame={
         map.setCollision(15);
         map.setTileIndexCallback(7, this.killPlayer, this);
         map.setTileIndexCallback(15, this.killPlayer, this);
+        map.setTileLocationCallback(206,6,2,2,this.endMap, this);
 
         btnAtras = game.add.button(32, 300, 'botonAtras');
         btnAtras.fixedToCamera=true;
@@ -195,16 +195,18 @@ var initGame={
                 break;
         }
     },
-    winPlayer: function(winner){
-        if(winner.body.x >= (206*32)){
-            var res = result.split(":");
-            var local = localStorage.getItem(gameOptions.localStorageName);
-            var localSplit = local.split(":");
-            if(typeof local != "undefined"){
-                if(parseInt(res[0])<=parseInt(localSplit[0])){
-                    if((parseInt(res[1])<=parseInt(localSplit[1])) || ((parseInt(localSplit[0])==0) && (parseInt(localSplit[1])==0))){
-                        localStorage.setItem(gameOptions.localStorageName, result);
-                    }
+    endMap: function(evt){
+        this.winPlayer;
+        console.log("finished");
+    },
+    winPlayer: function(){
+        var res = bestTime.split(":");
+        var local = localStorage.getItem(gameOptions.localStorageName);
+        var localSplit = local.split(":");
+        if(typeof local != "undefined"){
+            if(parseInt(res[0])<=parseInt(localSplit[0])){
+                if((parseInt(res[1])<=parseInt(localSplit[1])) || ((parseInt(localSplit[0])==0) && (parseInt(localSplit[1])==0))){
+                    localStorage.setItem(gameOptions.localStorageName, bestTime);
                 }
             }
         }
@@ -248,12 +250,12 @@ var initGame={
         var seconds = Math.floor(timeRemaining) - (60 * minutes);
     
         //Display minutes, add a 0 to the start if less than 10
-        result = (minutes < 10) ? "0" + minutes : minutes;
+        bestTime = (minutes < 10) ? "0" + minutes : minutes;
     
         //Display seconds, add a 0 to the start if less than 10
-        result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
-        bestTime = result;
-        timeText.setText(result);
+        bestTime += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+        
+        timeText.setText(bestTime);
     }
 }
 
