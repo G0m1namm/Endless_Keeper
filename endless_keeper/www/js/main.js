@@ -104,7 +104,7 @@ var initGame={
 
         layer.resizeWorld();
 
-        p = game.add.sprite(32, 200, 'playerRight');
+        p = game.add.sprite((203*32), 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -156,7 +156,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (this.button.isDown)
+        if (cursors.up.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -182,7 +182,7 @@ var initGame={
             p.body.velocity.x = 120;
             this.changeSide(false);
         }
-
+        this.winPlayer(p);
 		switch(numIntentos){
             case 1:
                 head1.kill();
@@ -194,11 +194,9 @@ var initGame={
             default:
                 break;
         }
-	},
-
-	killPlayer: function (sprite, tile){
-        numIntentos--;
-        if(numIntentos<=0){
+    },
+    winPlayer: function(winner){
+        if(winner.body.x >= (206*32)){
             var res = result.split(":");
             var local = localStorage.getItem(gameOptions.localStorageName);
             var localSplit = local.split(":");
@@ -209,10 +207,13 @@ var initGame={
                     }
                 }
             }
-            // else{
-            //     localStorage.setItem(gameOptions.localStorageName, "00:00");
-            // }
-            
+        }
+    },
+    
+
+	killPlayer: function (sprite, tile){
+        numIntentos--;
+        if(numIntentos<=0){
             game.state.restart();
         }
         else{
