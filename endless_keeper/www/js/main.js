@@ -337,7 +337,7 @@ var controles ={
 		game.add.sprite(0, 0,'bgControles');
         var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
         btnAtras.scale.setTo(0.8);
-        var btnAdelante= game.add.button(590,150,'botonAdelante',goToControles2,this);
+        var btnAdelante= game.add.button(590,150,'botonAnterior',goToControles2,this);
         	
 	},
 	 update:function() {
@@ -351,7 +351,7 @@ var controles2 ={
 		game.add.sprite(0, 0,'bgControles2');
         var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
         btnAtras.scale.setTo(0.8);	
-        var btnAnterior= game.add.button(10,150,'botonAnterior',goToControles,this);
+        var btnAnterior= game.add.button(10,150,'botonAdelante',goToControles,this);
 	},
 	 update:function() {
 	}
