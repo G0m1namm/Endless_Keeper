@@ -14,7 +14,7 @@ var head1;
 var head2;
 var head3;
 var bestTime;
-
+var check;
 var gameOptions={
 	gameWidth:640,
     gameHeight:360,
@@ -162,7 +162,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (this.button.isDown)
+        if (cursors.up.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -200,10 +200,15 @@ var initGame={
             default:
                 break;
         }
+        if(p.body.x > (103*32)){
+            check = true;
+        }
+        else{
+            check = false;
+        }
     },
     endMap: function(evt){
         this.winPlayer;
-        console.log("finished");
     },
     winPlayer: function(){
         var res = bestTime.split(":");
@@ -225,7 +230,12 @@ var initGame={
             game.state.restart();
         }
         else{
-            p.body.x=32;
+            if(check){
+                p.body.x= (104*32);
+                p.body.y=(4*32);
+                return false;
+            }
+            p.body.x= 32;
             p.body.y=200;
             jump=0;
             return false;
