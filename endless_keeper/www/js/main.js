@@ -15,6 +15,7 @@ var head2;
 var head3;
 var bestTime;
 var check;
+var music;
 var reg = {};
 
 var gameOptions={
@@ -48,11 +49,15 @@ var boot = {
 		}
 		else{
 		 bestTime =localStorage.getItem(gameOptions.localStorageName);
-		}
-
+        }
+        
+        
     },
 	preload: function(){
+        // fonts
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        // Musica de fondo
+        game.load.audio('musica',['img/musica.ogg']);
         // assets para el mapa
 		game.load.tilemap('map', 'img/Endless_keeper.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'img/warTileset_32x32.png');
@@ -94,7 +99,9 @@ var initGame={
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
         game.stage.backgroundColor = '#000';
-
+        music=game.add.audio('musica');
+        music.volume -= 0.9;
+        music.play();
         map = game.add.tilemap('map');
 
         map.addTilesetImage('EndlessKeeper-World1', 'tiles');
@@ -175,7 +182,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -302,8 +309,7 @@ var carga={
 
 var inicio={
     create:function() {
-        
-		game.add.sprite(0, 0,'bgMenu');
+		game.add.sprite(1, 1,'bgMenu');
         btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
@@ -380,6 +386,7 @@ var gameOver= {
 }
 
 function Inicio(){
+    music.pause();
     game.state.start('Inicio');
 }
 function goToGame(){
