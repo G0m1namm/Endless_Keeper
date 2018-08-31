@@ -237,7 +237,7 @@ var initGame={
         }
     },
 
-	killPlayer: function (sprite, tile){
+	killPlayer: function (sprite, tile){ 
         numIntentos--;
         if(numIntentos<=0){
             // game.state.start('GameOver');
