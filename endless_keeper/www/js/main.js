@@ -15,6 +15,8 @@ var head2;
 var head3;
 var bestTime;
 var check;
+var reg = {};
+
 var gameOptions={
 	gameWidth:640,
     gameHeight:360,
@@ -22,7 +24,19 @@ var gameOptions={
 }
 
 var game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS, 'game');
+WebFontConfig = {
 
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    // active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Roboto Slab']
+    }
+
+};
 var boot = {
 	init: function (){
          game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -38,7 +52,7 @@ var boot = {
 
     },
 	preload: function(){
-
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
         // assets para el mapa
 		game.load.tilemap('map', 'img/Endless_keeper.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'img/warTileset_32x32.png');
@@ -50,6 +64,7 @@ var boot = {
         game.load.image('botonControles','img/Botones/Boton_controles.png', 171, 37);
         game.load.image('botonCreditos','img/Botones/Boton_creditos.png', 171, 37);
         game.load.image('botonInicio','img/Botones/Boton_inicio.png', 171, 37);
+        game.load.image('botonReiniciar','img/Botones/reiniciar.png', 171, 37);
         // assets para los background
         game.load.image('bgControles','img/Fondos/Controles.png');
         game.load.image('bgMenu','img/Fondos/FondoMenu.png');
@@ -62,7 +77,10 @@ var boot = {
         // assets para el numero de intentos
         game.load.image('KeeperHead1','img/KeeperHead.png');        
         game.load.image('KeeperHead2','img/KeeperHead.png');        
-        game.load.image('KeeperHead3','img/KeeperHead.png');        
+        game.load.image('KeeperHead3','img/KeeperHead.png');
+        // assets para los modals
+        game.load.image('victoria','img/Fondos/victoria.png'); 
+        game.load.image('derrota','img/Fondos/derrota.png'); 
 		
 	},
 	create: function(){
@@ -75,7 +93,7 @@ var initGame={
 	create:function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        game.stage.backgroundColor = '#787878';
+        game.stage.backgroundColor = '#000';
 
         map = game.add.tilemap('map');
 
@@ -95,10 +113,6 @@ var initGame={
         map.setTileIndexCallback(7, this.killPlayer, this);
         map.setTileIndexCallback(15, this.killPlayer, this);
         map.setTileLocationCallback(206,6,2,2,this.endMap, this);
-
-        btnAtras = game.add.button(32, 300, 'botonAtras');
-        btnAtras.fixedToCamera=true;
-        btnAtras.cameraOffset.setTo(30, 20);
         
         layer = map.createLayer('World1');
 
@@ -150,14 +164,13 @@ var initGame={
 
         timeText = game.add.text(barConfig.x-200,14, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
         timeText.fixedToCamera = true;  
-          
+
         game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
 
 
     },
     
 	 update:function() {
-        var bool = false;
 		game.physics.arcade.collide(p, layer);
 
         p.body.velocity.x = 0;
@@ -209,6 +222,7 @@ var initGame={
     },
     endMap: function(evt){
         this.winPlayer;
+        goToVictory();
     },
     winPlayer: function(){
         var res = bestTime.split(":");
@@ -222,12 +236,12 @@ var initGame={
             }
         }
     },
-    
 
 	killPlayer: function (sprite, tile){
         numIntentos--;
         if(numIntentos<=0){
-            game.state.restart();
+            // game.state.start('GameOver');
+            goToGameOver();
         }
         else{
             if(check){
@@ -294,10 +308,12 @@ var inicio={
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
         btnCreditos = game.add.button(235,320,'botonCreditos',goToCreditos,this);
-        btnCreditos.scale.setTo(0.7);	
+        btnCreditos.scale.setTo(0.7);
+        
+        	
 	},
 	 update:function() {
-	}
+    }
 }
 
 var creditos ={
@@ -326,6 +342,43 @@ var controles ={
 
 }
 
+var victory = {
+
+    create: function(){
+        game.add.sprite(0, 0,'bgMenu');
+        var vic =game.add.image(0,0,'victoria');
+        vic.scale.setTo(0.6);
+        var score = game.add.text(gameOptions.gameWidth/1.8,203, bestTime, { font: "20px", fill: "#000", align: "center" });
+        score.font = 'Roboto Slab';
+        score.strokeThickness = 1;
+        var btnHome = game.add.button(gameOptions.gameWidth/2.6,gameOptions.gameHeight-45,'botonInicio',Inicio,this);
+        btnHome.scale.setTo(0.4);
+    },
+    update: function(){}
+    
+}
+
+var gameOver= {
+
+    create: function(){
+        game.add.sprite(0, 0,'bgMenu');
+		var vic =game.add.image(0,0,'derrota');
+        vic.scale.setTo(0.6);
+        var score = game.add.text(gameOptions.gameWidth/1.8,203, bestTime, { font: "20px", fill: "#000", align: "center" })
+        score.font = 'Roboto Slab';
+        score.strokeThickness = 1;
+        var btnReiniciar = game.add.button(5,gameOptions.gameHeight-50,'botonReiniciar',goToGame,this);
+        btnReiniciar.scale.setTo(0.6);
+        var btnHome = game.add.button(470,gameOptions.gameHeight-45,'botonInicio',Inicio,this);
+        btnHome.scale.setTo(0.4);
+
+    },
+    update: function(){
+
+    }
+
+}
+
 function Inicio(){
     game.state.start('Inicio');
 }
@@ -337,12 +390,15 @@ function goToCreditos(){
     game.state.start('Creditos');
 }
 function goToControles(){
-    game.state.start('Controles');
+    game.state.start('Controls');
+}
+function goToGameOver(){
+    game.state.start('GameOver');
+}
+function goToVictory(){
+    game.state.start('Victory');
 }
 
-function goToGame() {
-    game.state.start('InitGame');
-}
 
 game.state.add('Boot',boot);
 game.state.add('InitGame', initGame);
@@ -350,6 +406,8 @@ game.state.add('Inicio', inicio);
 game.state.add('Carga', carga);
 game.state.add('Creditos', creditos);
 game.state.add('Controles', controles);
+game.state.add('GameOver', gameOver);
+game.state.add('Victory', victory);
 
 
 function onDeviceReady() {
