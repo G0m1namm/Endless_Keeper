@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Fri Aug 31 00:45:26 COT 2018
+#Fri Aug 31 00:50:44 COT 2018
 5.base=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\assets\\debug
 42.base=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\assets\\debug
 32.set=ANDROID_RESOURCE

@@ -182,7 +182,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -309,7 +309,7 @@ var carga={
 
 var inicio={
     create:function() {
-		game.add.sprite(0, 0,'bgMenu');
+		game.add.sprite(1, 1,'bgMenu');
         btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
