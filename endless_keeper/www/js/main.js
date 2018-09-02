@@ -184,7 +184,7 @@ var initGame={
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
-                game.state.restart();
+                goToGameOver();
                 return false
             }
 
@@ -242,8 +242,7 @@ var initGame={
 
 	killPlayer: function (sprite, tile){ 
         numIntentos--;
-        if(numIntentos<=0){
-            // game.state.start('GameOver');
+        if(numIntentos<=0 || jump>=100){
             goToGameOver();
         }
         else{

@@ -26,13 +26,6 @@ var gameOptions={
 
 var game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS, 'game');
 WebFontConfig = {
-
-    //  'active' means all requested fonts have finished loading
-    //  We set a 1 second delay before calling 'createText'.
-    //  For some reason if we don't the browser cannot render the text the first time it's created.
-    // active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
-
-    //  The Google Fonts we want to load (specify as many as you like in the array)
     google: {
       families: ['Roboto Slab']
     }
@@ -70,6 +63,8 @@ var boot = {
         game.load.image('botonCreditos','img/Botones/Boton_creditos.png', 171, 37);
         game.load.image('botonInicio','img/Botones/Boton_inicio.png', 171, 37);
         game.load.image('botonReiniciar','img/Botones/reiniciar.png', 171, 37);
+        game.load.image('botonAdelante','img/Botones/leftArrow.png', 171, 37);
+        game.load.image('botonAnterior','img/Botones/rightArrow.png', 171, 37);
         // assets para los background
         game.load.image('bgControles','img/Fondos/Controles.png');
         game.load.image('bgMenu','img/Fondos/FondoMenu.png');
@@ -77,6 +72,7 @@ var boot = {
         game.load.image('bgVacio','img/Fondos/FondoVacio.png');
         game.load.image('bgPreload','img/Fondos/FondoPreload.png');
         game.load.image('healthbg', 'img/healthbg.jpg');
+        game.load.image('bgControles2','img/Fondos/Controles2.jpg');
         // assets para el joystick
         game.load.spritesheet('gamepad', 'img/joystick/gamepad_spritesheet.png',100,100);
         // assets para el numero de intentos
@@ -100,7 +96,7 @@ var initGame={
 
         game.stage.backgroundColor = '#000';
         music=game.add.audio('musica');
-        music.volume -= 0.9;
+        music.volume -= 0.8;
         music.play();
         map = game.add.tilemap('map');
 
@@ -182,7 +178,7 @@ var initGame={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -309,7 +305,7 @@ var carga={
 
 var inicio={
     create:function() {
-		game.add.sprite(0, 0,'bgMenu');
+		game.add.sprite(1, 1,'bgMenu');
         btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
@@ -340,8 +336,22 @@ var controles ={
 	create:function() {
 		game.add.sprite(0, 0,'bgControles');
         var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
-        btnAtras.scale.setTo(0.8); 	
+        btnAtras.scale.setTo(0.8);
+        var btnAdelante= game.add.button(590,150,'botonAnterior',goToControles2,this);
         	
+	},
+	 update:function() {
+	}
+
+}
+
+var controles2 ={
+
+	create:function() {
+		game.add.sprite(0, 0,'bgControles2');
+        var btnAtras = game.add.button(0,0,'botonAtras',Inicio,this);
+        btnAtras.scale.setTo(0.8);	
+        var btnAnterior= game.add.button(10,150,'botonAdelante',goToControles,this);
 	},
 	 update:function() {
 	}
@@ -386,7 +396,9 @@ var gameOver= {
 }
 
 function Inicio(){
-    music.pause();
+    if(typeof music != "undefined"){
+        music.pause();
+    }
     game.state.start('Inicio');
 }
 function goToGame(){
@@ -397,7 +409,10 @@ function goToCreditos(){
     game.state.start('Creditos');
 }
 function goToControles(){
-    game.state.start('Controls');
+    game.state.start('Controles');
+}
+function goToControles2(){
+    game.state.start('Controles2');
 }
 function goToGameOver(){
     game.state.start('GameOver');
@@ -413,6 +428,7 @@ game.state.add('Inicio', inicio);
 game.state.add('Carga', carga);
 game.state.add('Creditos', creditos);
 game.state.add('Controles', controles);
+game.state.add('Controles2', controles2);
 game.state.add('GameOver', gameOver);
 game.state.add('Victory', victory);
 
