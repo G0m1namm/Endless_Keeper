@@ -290,7 +290,7 @@ var level2={
 	create:function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        game.stage.backgroundColor = '#000';
+        game.stage.backgroundColor = '#204631';
         music=game.add.audio('musica');
         music.volume -= 0.8;
         music.play();
@@ -298,19 +298,20 @@ var level2={
 
         map2.addTilesetImage('wall', 'tiles2');
 
-        map2.setCollision(53);
-        map2.setCollision(73);
-        map2.setCollision(71);
-        map2.setCollision(1);
-        map2.setCollision(3);
-        map2.setCollision(36);
+        
         // map.setCollisionBetween(10,15);
         // map.setTileIndexCallback(7, this.killPlayer, this);
         // map.setTileIndexCallback(15, this.killPlayer, this);
         // map.setTileLocationCallback(206,6,2,2,this.endMap, this);
-        
         layer = map2.createLayer('backgroundZone');
-
+        map2.setCollision(53);
+        map2.setCollision(72);
+        map2.setCollision(73);
+        map2.setCollision(71);
+        map2.setCollision(81);
+        map2.setCollision(82);
+        map2.setCollision(3);
+        map2.setCollision(36);
         // layer.debug = true;
 
         layer.resizeWorld();
