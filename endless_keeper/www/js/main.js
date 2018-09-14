@@ -8,6 +8,7 @@ var barConfig;
 var jump=0;
 var myHealthbar;
 var timeText;
+var punto;
 var bestTimeText;
 var numIntentos=3;
 var head1;
@@ -15,6 +16,7 @@ var head2;
 var head3;
 var bestTime;
 var check;
+var check2 = 0;
 var music;
 var reg = {};
 
@@ -179,6 +181,7 @@ var level1={
 
             if(jump>=100){
                 goToGameOver();
+                jump=0;
                 return false
             }
 
@@ -238,6 +241,8 @@ var level1={
         numIntentos--;
         if(numIntentos<=0 || jump>=100){
             goToGameOver();
+            numIntentos=4;
+            jump = 0;
         }
         else{
             if(check){
@@ -247,7 +252,6 @@ var level1={
             }
             p.body.x= 32;
             p.body.y=200;
-            jump=0;
             return false;
         }
         
@@ -290,7 +294,7 @@ var level2={
 	create:function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        game.stage.backgroundColor = '#204631';
+        game.stage.backgroundColor = '#AEC440';
         music=game.add.audio('musica');
         music.volume -= 0.8;
         music.play();
@@ -298,26 +302,36 @@ var level2={
 
         map2.addTilesetImage('wall', 'tiles2');
 
-        
-        // map.setCollisionBetween(10,15);
-        // map.setTileIndexCallback(7, this.killPlayer, this);
-        // map.setTileIndexCallback(15, this.killPlayer, this);
-        // map.setTileLocationCallback(206,6,2,2,this.endMap, this);
-        layer = map2.createLayer('backgroundZone');
         map2.setCollision(53);
+        map2.setCollision(43);
         map2.setCollision(72);
         map2.setCollision(73);
         map2.setCollision(71);
         map2.setCollision(81);
         map2.setCollision(82);
         map2.setCollision(3);
+        map2.setCollision(1);
         map2.setCollision(36);
+        // map.setCollisionBetween(10,15);
+        map2.setTileIndexCallback(71, this.killPlayer, this);
+        map2.setTileIndexCallback(72, this.killPlayer, this);
+        map2.setTileIndexCallback(81, this.killPlayer, this);
+        map2.setTileIndexCallback(15, this.killPlayer, this);
+        // map2.setTileLocationCallback(79,14,3,2,this.checkpoint, this);
+        // map2.setTileLocationCallback(137,12,3,2,this.checkpoint, this);
+        // map2.setTileLocationCallback(222,7,3,2,this.checkpoint, this);
+        // map2.setTileLocationCallback(354,12,3,2,this.checkpoint, this);
+        map2.setTileLocationCallback(421,25,2,2,this.endMap, this);
+        map2.setTileLocationCallback(208,11,3,4,this.changeColorBg, this);
+
+        layer = map2.createLayer('backgroundZone');
+
         // layer.debug = true;
 
         layer.resizeWorld();
 
 
-        p = game.add.sprite(32, 200, 'playerRight');
+        p = game.add.sprite((208*16), 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -360,6 +374,9 @@ var level2={
         timeText = game.add.text(barConfig.x-200,14, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
         timeText.fixedToCamera = true;  
 
+        punto = game.add.text(barConfig.x-200,34, check2, { font: "16px Arial", fill: "#fff", align: "center" });
+        punto.fixedToCamera = true;  
+
         game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
 
 
@@ -370,13 +387,14 @@ var level2={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
                 goToGameOver();
+                jump=0;
                 return false
             }
 
@@ -408,16 +426,32 @@ var level2={
             default:
                 break;
         }
-        if(p.body.x > (103*32)){
-            check = true;
+        if(p.body.x > (79*16)){
+            check2 = 1;
         }
-        else{
-            check = false;
+        if(p.body.x >= (137*16) && check2 == 1){
+            check2 = 2;
+
         }
+        if(p.body.x >= (222*16) && check2 == 2){
+            check2 = 3;
+
+        }
+        if(p.body.x >= (354*16) && check2 == 3){
+            check2 = 4;
+
+        }
+    },
+    // checkpoint: function(point){
+    //     check2++;
+    // },
+    changeColorBg: function(evt){
+        game.stage.backgroundColor = '#204631';
     },
     endMap: function(evt){
         this.winPlayer;
         goToVictory();
+        numIntentos=3;
     },
     winPlayer: function(){
         var res = bestTime.split(":");
@@ -436,17 +470,41 @@ var level2={
         numIntentos--;
         if(numIntentos<=0 || jump>=100){
             goToGameOver();
+            numIntentos=4;
+            check2 = 0;
+            jump = 0;
+
         }
         else{
-            if(check){
-                p.body.x= (104*32);
-                p.body.y=(4*32);
+            if(check2 == 0){
+                p.body.x= 32;
+                p.body.y= 200;
                 return false;
             }
-            p.body.x= 32;
-            p.body.y=200;
-            jump=0;
-            return false;
+            if(check2 == 1){
+                p.body.x =  (79 * 16);
+                p.body.y = (14 * 16);
+                return false;
+    
+            }
+            if(check2 == 2){
+                p.body.x =  (137 * 16);
+                p.body.y = (12 * 16);
+                return false;
+    
+            }
+            if (check2 == 3){
+                p.body.x =  (222 * 16);
+                p.body.y = (7 * 16);
+                return false;
+    
+            }
+            if(check2 == 4){
+                p.body.x =  (354 * 16);
+                p.body.y = (12 * 16);
+                return false;
+    
+            }
         }
         
     },
@@ -496,7 +554,7 @@ var carga={
 
 var inicio={
     create:function() {
-		game.add.sprite(1, 1,'bgMenu');
+		game.add.sprite(0, 0,'bgMenu');
         btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
@@ -552,7 +610,7 @@ var controles2 ={
 var victory = {
 
     create: function(){
-        game.add.sprite(0, 0,'bgMenu');
+        game.add.sprite(0.5, 0.5,'bgMenu');
         var vic =game.add.image(0,0,'victoria');
         vic.scale.setTo(0.6);
         var score = game.add.text(gameOptions.gameWidth/1.8,203, bestTime, { font: "20px", fill: "#000", align: "center" });
@@ -568,7 +626,7 @@ var victory = {
 var gameOver= {
 
     create: function(){
-        game.add.sprite(0, 0,'bgMenu');
+        game.add.sprite(0.5, 0.5,'bgMenu');
 		var vic =game.add.image(0,0,'derrota');
         vic.scale.setTo(0.6);
         var score = game.add.text(gameOptions.gameWidth/1.8,203, bestTime, { font: "20px", fill: "#000", align: "center" })
@@ -626,6 +684,5 @@ game.state.add('Victory', victory);
 
 
 function onDeviceReady() {
-   
-	game.state.start('Boot');
+    game.state.start('Boot');
 }
