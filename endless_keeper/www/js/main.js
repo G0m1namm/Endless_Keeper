@@ -8,7 +8,6 @@ var barConfig;
 var jump=0;
 var myHealthbar;
 var timeText;
-var punto;
 var bestTimeText;
 var numIntentos=3;
 var head1;
@@ -316,11 +315,8 @@ var level2={
         map2.setTileIndexCallback(71, this.killPlayer, this);
         map2.setTileIndexCallback(72, this.killPlayer, this);
         map2.setTileIndexCallback(81, this.killPlayer, this);
+        map2.setTileIndexCallback(82, this.killPlayer, this);
         map2.setTileIndexCallback(15, this.killPlayer, this);
-        // map2.setTileLocationCallback(79,14,3,2,this.checkpoint, this);
-        // map2.setTileLocationCallback(137,12,3,2,this.checkpoint, this);
-        // map2.setTileLocationCallback(222,7,3,2,this.checkpoint, this);
-        // map2.setTileLocationCallback(354,12,3,2,this.checkpoint, this);
         map2.setTileLocationCallback(421,25,2,2,this.endMap, this);
         map2.setTileLocationCallback(208,11,3,4,this.changeColorBg, this);
 
@@ -331,7 +327,7 @@ var level2={
         layer.resizeWorld();
 
 
-        p = game.add.sprite((348*16), 200, 'playerRight');
+        p = game.add.sprite((140*16), (11*16), 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -373,9 +369,6 @@ var level2={
 
         timeText = game.add.text(barConfig.x-200,14, "00:00", { font: "16px Arial", fill: "#fff", align: "center" });
         timeText.fixedToCamera = true;  
-
-        punto = game.add.text(barConfig.x-200,34, check2, { font: "16px Arial", fill: "#fff", align: "center" });
-        punto.fixedToCamera = true;  
 
         game.time.events.loop(Phaser.Timer.SECOND, this.updateTimer, this);
 
@@ -495,13 +488,13 @@ var level2={
             }
             if (check2 == 3){
                 p.body.x =  (222 * 16);
-                p.body.y = (7 * 16);
+                p.body.y = (6 * 16);
                 return false;
     
             }
             if(check2 == 4){
                 p.body.x =  (354 * 16);
-                p.body.y = (12 * 16);
+                p.body.y = (11 * 16);
                 return false;
     
             }

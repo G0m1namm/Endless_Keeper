@@ -331,7 +331,7 @@ var level2={
         layer.resizeWorld();
 
 
-        p = game.add.sprite((208*16), 200, 'playerRight');
+        p = game.add.sprite((140*16), (11*16), 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
@@ -495,13 +495,13 @@ var level2={
             }
             if (check2 == 3){
                 p.body.x =  (222 * 16);
-                p.body.y = (7 * 16);
+                p.body.y = (6 * 16);
                 return false;
     
             }
             if(check2 == 4){
                 p.body.x =  (354 * 16);
-                p.body.y = (12 * 16);
+                p.body.y = (11 * 16);
                 return false;
     
             }
