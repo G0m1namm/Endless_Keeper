@@ -331,7 +331,7 @@ var level2={
         layer.resizeWorld();
 
 
-        p = game.add.sprite(32, 200, 'playerRight');
+        p = game.add.sprite((208*16), 200, 'playerRight');
         game.physics.enable(p);
 
         game.physics.arcade.gravity.y = 350;
