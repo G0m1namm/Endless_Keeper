@@ -15,6 +15,7 @@ var head2;
 var head3;
 var bestTime;
 var check;
+var check2 = 0;
 var music;
 var reg = {};
 
@@ -75,6 +76,8 @@ var boot = {
         game.load.image('bgPreload','img/Fondos/FondoPreload.png');
         game.load.image('healthbg', 'img/healthbg.jpg');
         game.load.image('bgControles2','img/Fondos/Controles2.jpg');
+        game.load.image('bgtoLevel2','img/Fondos/FondoNivel2.jpg');
+
         // assets para el joystick
         game.load.spritesheet('gamepad', 'img/joystick/gamepad_spritesheet.png',100,100);
         // assets para el numero de intentos
@@ -172,7 +175,7 @@ var level1={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
@@ -219,8 +222,8 @@ var level1={
         }
     },
     endMap: function(evt){
-        this.winPlayer;
-        goToVictory();
+        this.winPlayer();
+        goToChange();
     },
     winPlayer: function(){
         var res = bestTime.split(":");
@@ -239,6 +242,8 @@ var level1={
         numIntentos--;
         if(numIntentos<=0 || jump>=100){
             goToGameOver();
+            numIntentos=4;
+            jump = 0;
         }
         else{
             if(check){
@@ -287,10 +292,10 @@ var level1={
 
 var level2={
 	
-	create:function() {
+	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        game.stage.backgroundColor = '#204631';
+        game.stage.backgroundColor = '#AEC440';
         music=game.add.audio('musica');
         music.volume -= 0.8;
         music.play();
@@ -298,22 +303,27 @@ var level2={
 
         map2.addTilesetImage('wall', 'tiles2');
 
-        
-        // map.setCollisionBetween(10,15);
-        map2.setTileIndexCallback(71, this.killPlayer, this);
-        map2.setTileIndexCallback(72, this.killPlayer, this);
-        map2.setTileIndexCallback(81, this.killPlayer, this);
-        map2.setTileIndexCallback(15, this.killPlayer, this);
-        map2.setTileLocationCallback(421,25,2,2,this.endMap, this);
-        layer = map2.createLayer('backgroundZone');
         map2.setCollision(53);
+        map2.setCollision(43);
         map2.setCollision(72);
         map2.setCollision(73);
         map2.setCollision(71);
         map2.setCollision(81);
         map2.setCollision(82);
         map2.setCollision(3);
+        map2.setCollision(1);
         map2.setCollision(36);
+        // map.setCollisionBetween(10,15);
+        map2.setTileIndexCallback(71, this.killPlayer, this);
+        map2.setTileIndexCallback(72, this.killPlayer, this);
+        map2.setTileIndexCallback(81, this.killPlayer, this);
+        map2.setTileIndexCallback(82, this.killPlayer, this);
+        map2.setTileIndexCallback(15, this.killPlayer, this);
+        map2.setTileLocationCallback(421,25,2,2,this.endMap, this);
+        map2.setTileLocationCallback(208,11,3,4,this.changeColorBg, this);
+
+        layer = map2.createLayer('backgroundZone');
+
         // layer.debug = true;
 
         layer.resizeWorld();
@@ -372,13 +382,13 @@ var level2={
 
         p.body.velocity.x = 0;
 
-        if (cursors.up.isDown)
+        if (this.button.isDown)
         {
             jump+=0.1;
             myHealthbar.setPercent(100-jump);
 
             if(jump>=100){
-                goToGameOver();
+                this.killPlayer();
                 jump=0;
                 return false
             }
@@ -411,16 +421,29 @@ var level2={
             default:
                 break;
         }
-        if(p.body.x > (103*32)){
-            check = true;
+        if(p.body.x > (79*16)){
+            check2 = 1;
         }
-        else{
-            check = false;
+        if(p.body.x >= (137*16) && check2 == 1){
+            check2 = 2;
+
         }
+        if(p.body.x >= (222*16) && check2 == 2){
+            check2 = 3;
+
+        }
+        if(p.body.x >= (354*16) && check2 == 3){
+            check2 = 4;
+
+        }
+    },
+    changeColorBg: function(evt){
+        game.stage.backgroundColor = '#204631';
     },
     endMap: function(evt){
         this.winPlayer;
         goToVictory();
+        numIntentos=3;
     },
     winPlayer: function(){
         var res = bestTime.split(":");
@@ -439,17 +462,41 @@ var level2={
         numIntentos--;
         if(numIntentos<=0 || jump>=100){
             goToGameOver();
+            numIntentos=4;
+            check2 = 0;
+            jump = 0;
+
         }
         else{
-            if(check){
-                p.body.x= (104*32);
-                p.body.y=(4*32);
+            if(check2 == 0){
+                p.body.x= 32;
+                p.body.y= 200;
                 return false;
             }
-            p.body.x= 32;
-            p.body.y=200;
-            jump=0;
-            return false;
+            if(check2 == 1){
+                p.body.x =  (79 * 16);
+                p.body.y = (13 * 16);
+                return false;
+    
+            }
+            if(check2 == 2){
+                p.body.x =  (138 * 16);
+                p.body.y = (11 * 16);
+                return false;
+    
+            }
+            if (check2 == 3){
+                p.body.x =  (222 * 16);
+                p.body.y = (6 * 16);
+                return false;
+    
+            }
+            if(check2 == 4){
+                p.body.x =  (354 * 16);
+                p.body.y = (11 * 16);
+                return false;
+    
+            }
         }
         
     },
@@ -499,7 +546,7 @@ var carga={
 
 var inicio={
     create:function() {
-		game.add.sprite(1, 1,'bgMenu');
+		game.add.sprite(0, 0,'bgMenu');
         btnPlay = game.add.button(115,150,'botonInicio',goToGame,this);
         btnInfo = game.add.button(198,250,'botonControles',goToControles,this);
         btnInfo.scale.setTo(0.6);	
@@ -567,11 +614,23 @@ var victory = {
     update: function(){}
     
 }
+var changeLevel2 = {
+
+    create: function(){
+        game.add.sprite(0,0,'bgtoLevel2');
+        jump = 0;
+        game.time.events.loop(2500,function(){
+            game.state.start('level2');            
+        });
+
+    },
+    update : function(){}
+}
 
 var gameOver= {
 
     create: function(){
-        game.add.sprite(0, 0,'bgMenu');
+        game.add.sprite(0.5, 0.5,'bgMenu');
 		var vic =game.add.image(0,0,'derrota');
         vic.scale.setTo(0.6);
         var score = game.add.text(gameOptions.gameWidth/1.8,203, bestTime, { font: "20px", fill: "#000", align: "center" })
@@ -596,9 +655,12 @@ function Inicio(){
     game.state.start('Inicio');
 }
 function goToGame(){
-    game.state.start('level2');
+    game.state.start('level1');
 }
 
+function goToChange(){
+    game.state.start('ChangeLevel');
+}
 function goToCreditos(){
     game.state.start('Creditos');
 }
@@ -621,6 +683,7 @@ game.state.add('level1', level1);
 game.state.add('level2', level2);
 game.state.add('Inicio', inicio);
 game.state.add('Carga', carga);
+game.state.add('ChangeLevel', changeLevel2);
 game.state.add('Creditos', creditos);
 game.state.add('Controles', controles);
 game.state.add('Controles2', controles2);
