@@ -1,4 +1,4 @@
-#Fri Sep 14 19:11:00 COT 2018
+#Fri Sep 14 19:37:10 COT 2018
 base.0=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\release\\0
 renamed.0=classes.dex
 file.0=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\release\\0\\classes.dex
