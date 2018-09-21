@@ -14,15 +14,11 @@ manifest
 ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 MERGED from [:CordovaLib] E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\CordovaLib\build\intermediates\manifests\full\release\AndroidManifest.xml:20:1-27:12
-INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:1-17:12
 	package
 		ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:102-133
-		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
 		ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:2:74-101
 		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
@@ -93,12 +89,20 @@ ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\pla
 		ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
 uses-sdk
 ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
+INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
+INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
 MERGED from [:CordovaLib] E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\CordovaLib\build\intermediates\manifests\full\release\AndroidManifest.xml:25:5-44
 MERGED from [:CordovaLib] E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\CordovaLib\build\intermediates\manifests\full\release\AndroidManifest.xml:25:5-44
+INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
+INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
 	android:targetSdkVersion
 		ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:42-71
+		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
 		ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:16:15-41
+		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml
 meta-data#android.support.FILE_PROVIDER_PATHS
 ADDED from E:\Universidad\Aplicaciones Moviles\Endless_Keeper\endless_keeper\platforms\android\app\src\main\AndroidManifest.xml:13:13-112
 	android:resource

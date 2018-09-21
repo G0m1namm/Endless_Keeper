@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Fri Sep 14 19:11:01 COT 2018
+#Fri Sep 14 19:37:11 COT 2018
 5.base=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\assets\\release
 42.base=E\:\\Universidad\\Aplicaciones Moviles\\Endless_Keeper\\endless_keeper\\platforms\\android\\app\\build\\intermediates\\res\\release\\resources-release.ap_
 32.set=ANDROID_RESOURCE
